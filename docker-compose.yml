@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: pa$$word
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
+    restart: always
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: pa$$word
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+
+  backup:
+    image: databack/mysql-backup
+    environment:
+      DB_SERVER: db
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: pa$$word
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DB_NAME: wordpress
+      BACKUP_NUM_KEEP: 3
+      BACKUP_FREQUENCY: daily
+    volumes:
+      - ./backups:/backup
+    restart: always
+
+volumes:
+  wp_data:
+  db_data:
