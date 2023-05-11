@@ -1,8 +1,6 @@
 # CharacterDesign.world
 This is the backend project for the [CharacterDesign.world](https://characterdesign.world/) blog, a community of creators dedicated to exploring the exciting world of character design. Our blog is focused on providing expert guidance on how to create characters for a variety of mediums, from comics to games, books, and even interactive chatbots. We understand the importance of staying up to date with rapidly changing trends in character design, and we are committed to sharing our insights with our readers.
 
-To visit the blog, please click [here](https://characterdesign.world/2023/).
-
 ## Getting Started
 To get started with this project, you will need to have Docker and docker-compose installed on your machine. Once you have these tools installed, you can run the following command to start the WordPress instance:
 
